@@ -1,0 +1,951 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}MentoraX AI — Neural Academic Engine{% endblock %}
+
+{% block nav_links %}
+    <a href="{% url 'home_page' %}" class="nav-link active">Home</a>
+    <a href="{% url 'biometric_scan' %}" class="nav-link">Get Started</a>
+    <a href="{% url 'about_page' %}" class="nav-link">About</a>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ══════════════════════════════════════════════════════
+   HOME PAGE — FULL REDESIGN
+   ══════════════════════════════════════════════════════ */
+
+/* ── Animated grid canvas background ── */
+#heroCanvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.18;
+    pointer-events: none;
+}
+
+/* ── Hero ── */
+.h-hero {
+    position: relative;
+    min-height: 92vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    padding: 60px 20px;
+}
+
+.h-hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,212,255,0.10) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(124,58,237,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 30% at 20% 60%, rgba(0,255,136,0.05) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.h-hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+/* Badge pill */
+.h-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,212,255,0.07);
+    border: 1px solid rgba(0,212,255,0.25);
+    border-radius: 50px;
+    padding: 6px 18px;
+    font-size: 0.7rem;
+    color: #00d4ff;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    animation: fadeSlideDown 0.6s ease both;
+}
+.h-badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #00ff88;
+    animation: blink 1.4s infinite;
+}
+
+/* Main heading */
+.h-title {
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 900;
+    letter-spacing: 3px;
+    line-height: 1.05;
+    margin-bottom: 18px;
+    animation: fadeSlideDown 0.7s ease 0.1s both;
+}
+.h-title-brand {
+    background: linear-gradient(135deg, #ffffff 0%, #e0e0ff 50%, #00d4ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.h-title-ai {
+    background: linear-gradient(135deg, #00d4ff, #7c3aed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+}
+.h-title-ai::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #00d4ff, #7c3aed);
+    border-radius: 2px;
+}
+
+/* Typing tagline */
+.h-tagline {
+    font-size: 0.85rem;
+    letter-spacing: 4px;
+    color: #7777aa;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    min-height: 22px;
+    animation: fadeSlideDown 0.7s ease 0.2s both;
+}
+.h-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background: #00d4ff;
+    margin-left: 3px;
+    vertical-align: middle;
+    animation: cursorBlink 0.8s infinite;
+}
+@keyframes cursorBlink { 0%,49%{opacity:1} 50%,100%{opacity:0} }
+
+/* Description */
+.h-desc {
+    font-size: 1rem;
+    color: #9999bb;
+    line-height: 1.85;
+    max-width: 560px;
+    margin: 0 auto 36px;
+    animation: fadeSlideDown 0.7s ease 0.3s both;
+}
+.h-desc strong { color: #00d4ff; }
+
+/* CTA buttons */
+.h-actions {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeSlideDown 0.7s ease 0.4s both;
+}
+
+.btn-hp {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+}
+.btn-hp::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.06);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+.btn-hp:hover::before { opacity: 1; }
+
+.btn-hp-primary {
+    background: linear-gradient(135deg, #00b8dd, #0091cc);
+    color: #000;
+    box-shadow: 0 0 28px rgba(0,212,255,0.35);
+}
+.btn-hp-primary:hover {
+    box-shadow: 0 0 42px rgba(0,212,255,0.55);
+    transform: translateY(-2px);
+    text-decoration: none;
+    color: #000;
+}
+
+.btn-hp-secondary {
+    background: rgba(255,255,255,0.04);
+    color: #e0e0f0;
+    border: 1px solid rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+}
+.btn-hp-secondary:hover {
+    border-color: rgba(0,212,255,0.5);
+    color: #00d4ff;
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+
+/* Scroll indicator */
+.h-scroll {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: #444466;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    animation: fadeSlideDown 1s ease 1s both;
+}
+.h-scroll-arrow {
+    width: 20px; height: 20px;
+    border-right: 2px solid #333355;
+    border-bottom: 2px solid #333355;
+    transform: rotate(45deg);
+    animation: scrollBounce 1.6s infinite;
+}
+@keyframes scrollBounce {
+    0%,100%{transform:rotate(45deg) translateY(0)}
+    50%{transform:rotate(45deg) translateY(5px)}
+}
+
+
+/* ── Stats strip ── */
+.h-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 80px;
+}
+.h-stat {
+    background: var(--bg-card);
+    padding: 28px 20px;
+    text-align: center;
+    transition: background 0.2s;
+}
+.h-stat:hover { background: #121236; }
+.h-stat-num {
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: #00d4ff;
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 6px;
+}
+.h-stat-label {
+    font-size: 0.72rem;
+    color: #7777aa;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+
+/* ── Section titles ── */
+.h-section { margin-bottom: 80px; }
+.h-section-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 36px;
+}
+.h-section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border) 0%, transparent 100%);
+}
+.h-section-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #fff;
+    white-space: nowrap;
+    letter-spacing: 1px;
+}
+.h-section-title span { color: #00d4ff; }
+
+
+/* ── Steps (How it works) ── */
+.h-steps {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    position: relative;
+}
+/* Connector line between steps */
+.h-steps::before {
+    content: '';
+    position: absolute;
+    top: 36px;
+    left: calc(10% + 20px);
+    right: calc(10% + 20px);
+    height: 1px;
+    background: linear-gradient(90deg,
+        rgba(0,212,255,0.5),
+        rgba(124,58,237,0.5),
+        rgba(0,255,136,0.5));
+    z-index: 0;
+}
+
+.h-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 12px;
+    position: relative;
+    z-index: 1;
+}
+
+.h-step-circle {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    margin-bottom: 16px;
+    position: relative;
+    transition: all 0.3s;
+}
+.h-step:hover .h-step-circle {
+    border-color: #00d4ff;
+    box-shadow: 0 0 20px rgba(0,212,255,0.3);
+    background: rgba(0,212,255,0.07);
+}
+
+.h-step-num {
+    position: absolute;
+    top: -8px; right: -8px;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00d4ff, #7c3aed);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.h-step-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #ddd;
+    margin-bottom: 6px;
+}
+.h-step-desc {
+    font-size: 0.75rem;
+    color: #666688;
+    line-height: 1.6;
+}
+
+
+/* ── Feature cards ── */
+.h-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.h-feat {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: default;
+}
+.h-feat::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,212,255,0.04), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.h-feat:hover {
+    border-color: rgba(0,212,255,0.35);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,212,255,0.1);
+}
+.h-feat:hover::before { opacity: 1; }
+
+/* Top accent line per feature */
+.h-feat-accent {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.h-feat:hover .h-feat-accent { opacity: 1; }
+
+.h-feat-icon {
+    font-size: 2rem;
+    margin-bottom: 14px;
+    display: block;
+}
+.h-feat h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+.h-feat p {
+    font-size: 0.82rem;
+    color: #7777aa;
+    line-height: 1.7;
+}
+.h-feat-tag {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 0.68rem;
+    letter-spacing: 1.5px;
+    color: #00d4ff;
+    border: 1px solid rgba(0,212,255,0.2);
+    border-radius: 20px;
+    padding: 2px 10px;
+}
+
+
+/* ── Terminal preview ── */
+.h-terminal {
+    background: #060614;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 80px;
+}
+.h-terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 18px;
+    background: #0a0a22;
+    border-bottom: 1px solid var(--border);
+}
+.h-term-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+}
+.h-term-dot.r { background: #ff5f57; }
+.h-term-dot.y { background: #febc2e; }
+.h-term-dot.g { background: #28c840; }
+.h-term-title {
+    margin-left: 8px;
+    font-size: 0.72rem;
+    color: #555577;
+    letter-spacing: 1px;
+}
+.h-term-badge {
+    margin-left: auto;
+    font-size: 0.65rem;
+    background: rgba(124,58,237,0.2);
+    color: #a78bfa;
+    border: 1px solid rgba(124,58,237,0.3);
+    border-radius: 20px;
+    padding: 2px 10px;
+    letter-spacing: 1px;
+}
+.h-term-body {
+    padding: 24px 28px;
+    font-size: 0.82rem;
+    line-height: 2;
+}
+.t-comment { color: #3a3a5a; }
+.t-key     { color: #7c3aed; }
+.t-str     { color: #00ff88; }
+.t-num     { color: #ffaa00; }
+.t-obj     { color: #00d4ff; }
+.t-label   { color: #555577; font-size: 0.7rem; letter-spacing: 1px; margin-top: 8px; display: block; }
+
+
+/* ── CTA section ── */
+.h-cta {
+    position: relative;
+    text-align: center;
+    padding: 70px 20px;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #0a0a28, #0f0f35, #0a0a28);
+    border: 1px solid rgba(0,212,255,0.15);
+}
+.h-cta-glow {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 400px; height: 200px;
+    background: radial-gradient(ellipse, rgba(0,212,255,0.12) 0%, transparent 70%);
+    pointer-events: none;
+}
+.h-cta h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 12px;
+    position: relative;
+}
+.h-cta p {
+    color: #7777aa;
+    margin-bottom: 28px;
+    font-size: 0.9rem;
+    position: relative;
+}
+.h-cta-note {
+    margin-top: 16px;
+    font-size: 0.72rem;
+    color: #44445a;
+    letter-spacing: 1px;
+    position: relative;
+}
+
+
+/* ── Animations ── */
+@keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+    .h-stats { grid-template-columns: repeat(2, 1fr); }
+    .h-features { grid-template-columns: repeat(2, 1fr); }
+    .h-steps { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .h-steps::before { display: none; }
+}
+@media (max-width: 600px) {
+    .h-title { font-size: 2.4rem; }
+    .h-stats { grid-template-columns: repeat(2, 1fr); }
+    .h-features { grid-template-columns: 1fr; }
+    .h-steps { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
+<div class="h-hero">
+    <div class="h-hero-bg"></div>
+    <canvas id="heroCanvas"></canvas>
+
+    <div class="h-hero-inner">
+        <div class="h-badge">
+            <span class="h-badge-dot"></span>
+            AI-Powered Academic System
+        </div>
+
+        <h1 class="h-title">
+            <span class="h-title-brand">MentoraX</span>
+            <span class="h-title-ai"> AI</span>
+        </h1>
+
+        <p class="h-tagline">
+            <span id="typingText"></span><span class="h-cursor"></span>
+        </p>
+
+        <p class="h-desc">
+            Upload your marksheet, enter academic data, and let the engine analyze your
+            performance — finding patterns, identifying gaps, and generating a
+            <strong>personalised 5-day study plan</strong> powered by Groq LLM.
+        </p>
+
+        <div class="h-actions">
+            <a href="{% url 'biometric_scan' %}" class="btn-hp btn-hp-primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5,3 19,12 5,21"/></svg>
+                Start Analysis
+            </a>
+            <a href="{% url 'about_page' %}" class="btn-hp btn-hp-secondary">
+                Learn More
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+        </div>
+    </div>
+
+    <div class="h-scroll">
+        SCROLL
+        <div class="h-scroll-arrow"></div>
+    </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     STATS
+══════════════════════════════════════ -->
+<div class="h-stats fade-in">
+    <div class="h-stat">
+        <div class="h-stat-num" data-target="{{ total_analyses }}">0</div>
+        <div class="h-stat-label">Analyses Run</div>
+    </div>
+    <div class="h-stat">
+        <div class="h-stat-num" data-target="3" data-suffix=" Tiers">0</div>
+        <div class="h-stat-label">Performance Levels</div>
+    </div>
+    <div class="h-stat">
+        <div class="h-stat-num" data-target="70" data-suffix="B">0</div>
+        <div class="h-stat-label">LLM Parameters</div>
+    </div>
+    <div class="h-stat">
+        <div class="h-stat-num" data-prefix="&lt;" data-target="2" data-suffix="s">0</div>
+        <div class="h-stat-label">AI Response Time</div>
+    </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     HOW IT WORKS
+══════════════════════════════════════ -->
+<div class="h-section fade-in">
+    <div class="h-section-head">
+        <h2 class="h-section-title">How It <span>Works</span></h2>
+        <div class="h-section-line"></div>
+    </div>
+
+    <div class="h-steps">
+
+        <div class="h-step">
+            <div class="h-step-circle">
+                🔐
+                <div class="h-step-num">1</div>
+            </div>
+            <div class="h-step-title">Biometric Login</div>
+            <div class="h-step-desc">Authorize your session with a simulated fingerprint scan</div>
+        </div>
+
+        <div class="h-step">
+            <div class="h-step-circle">
+                📄
+                <div class="h-step-num">2</div>
+            </div>
+            <div class="h-step-title">Upload Marksheet</div>
+            <div class="h-step-desc">OCR auto-extracts marks, student ID, and subject from your image</div>
+        </div>
+
+        <div class="h-step">
+            <div class="h-step-circle">
+                🧠
+                <div class="h-step-num">3</div>
+            </div>
+            <div class="h-step-title">Heuristic Engine</div>
+            <div class="h-step-desc">Classifies tier and maps correlations between habits and results</div>
+        </div>
+
+        <div class="h-step">
+            <div class="h-step-circle">
+                🤖
+                <div class="h-step-num">4</div>
+            </div>
+            <div class="h-step-title">Groq AI Analysis</div>
+            <div class="h-step-desc">Llama 70B generates a personalised summary and 5-day plan</div>
+        </div>
+
+        <div class="h-step">
+            <div class="h-step-circle">
+                📊
+                <div class="h-step-num">5</div>
+            </div>
+            <div class="h-step-title">Neural Dashboard</div>
+            <div class="h-step-desc">Charts, correlations, and AI insights — ready to print</div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     FEATURES
+══════════════════════════════════════ -->
+<div class="h-section fade-in">
+    <div class="h-section-head">
+        <h2 class="h-section-title">What You <span>Get</span></h2>
+        <div class="h-section-line"></div>
+    </div>
+
+    <div class="h-features">
+
+        <div class="h-feat">
+            <div class="h-feat-accent" style="background:linear-gradient(90deg,#00d4ff,transparent)"></div>
+            <span class="h-feat-icon">📡</span>
+            <h4>Live OCR Scanner</h4>
+            <p>Upload a marksheet photo — Tesseract 4 reads the marks, student ID, and subject automatically and fills your form.</p>
+            <span class="h-feat-tag">TESSERACT v4.1</span>
+        </div>
+
+        <div class="h-feat">
+            <div class="h-feat-accent" style="background:linear-gradient(90deg,#7c3aed,transparent)"></div>
+            <span class="h-feat-icon">🤖</span>
+            <h4>Groq LLM Insights</h4>
+            <p>llama-3.3-70b-versatile generates subject-specific advice, 5 deep recommendations, and a daily study plan in &lt;2s.</p>
+            <span class="h-feat-tag">llama-3.3-70b</span>
+        </div>
+
+        <div class="h-feat">
+            <div class="h-feat-accent" style="background:linear-gradient(90deg,#00ff88,transparent)"></div>
+            <span class="h-feat-icon">🔍</span>
+            <h4>Correlation Mapping</h4>
+            <p>The heuristic engine detects patterns — like high study hours with low marks — and flags the real root cause.</p>
+            <span class="h-feat-tag">HEURISTIC ENGINE</span>
+        </div>
+
+        <div class="h-feat">
+            <div class="h-feat-accent" style="background:linear-gradient(90deg,#ffaa00,transparent)"></div>
+            <span class="h-feat-icon">📊</span>
+            <h4>Interactive Charts</h4>
+            <p>Doughnut and bar charts built with Chart.js display score breakdown and multi-metric comparison side by side.</p>
+            <span class="h-feat-tag">CHART.JS v4.4</span>
+        </div>
+
+        <div class="h-feat">
+            <div class="h-feat-accent" style="background:linear-gradient(90deg,#ff4444,transparent)"></div>
+            <span class="h-feat-icon">🏆</span>
+            <h4>Tier Classification</h4>
+            <p>Every student is classified into Excellent, Average, or Alert tier — each with a specific intervention strategy.</p>
+            <span class="h-feat-tag">3-TIER SYSTEM</span>
+        </div>
+
+        <div class="h-feat">
+            <div class="h-feat-accent" style="background:linear-gradient(90deg,#aa88ff,transparent)"></div>
+            <span class="h-feat-icon">🗃️</span>
+            <h4>Persistent History</h4>
+            <p>Every analysis is stored in the database. View, filter, and search all past records from the admin panel.</p>
+            <span class="h-feat-tag">SQLITE + DJANGO ORM</span>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     TERMINAL PREVIEW (AI output sample)
+══════════════════════════════════════ -->
+<div class="h-terminal fade-in" style="margin-bottom:80px;">
+    <div class="h-terminal-bar">
+        <span class="h-term-dot r"></span>
+        <span class="h-term-dot y"></span>
+        <span class="h-term-dot g"></span>
+        <span class="h-term-title">mentorax_ai / groq_response.json</span>
+        <span class="h-term-badge">llama-3.3-70b-versatile</span>
+    </div>
+    <div class="h-term-body">
+<span class="t-comment">// Sample AI response generated in &lt;1.8s</span>
+<br><br>
+<span class="t-obj">{</span><br>
+&nbsp;&nbsp;<span class="t-key">"summary"</span>: <span class="t-str">"You're performing at an average level in Mathematics (62%).<br>
+&nbsp;&nbsp;&nbsp;Your attendance of 68% is likely dragging your score down.<br>
+&nbsp;&nbsp;&nbsp;With targeted effort you can reach Excellent tier this semester."</span>,<br>
+<br>
+&nbsp;&nbsp;<span class="t-key">"recommendations"</span>: <span class="t-obj">[</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Increase attendance to 85%+ — prioritise morning lectures"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Solve 10 past-paper questions every day for 2 weeks"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Use spaced repetition for formulas — review every 3 days"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Form a study group to cover missed lecture topics"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Schedule a 1-hour teacher consultation this week"</span><br>
+&nbsp;&nbsp;<span class="t-obj">]</span>,<br>
+<br>
+&nbsp;&nbsp;<span class="t-key">"study_plan"</span>: <span class="t-obj">[</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Day 1: Solve 10 algebraic equations from past papers (Ch 3–5)"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Day 2: Geometry — watch 2 video lectures, take structured notes"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Day 3: Full mock test on Trigonometry — identify weak spots"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Day 4: Flashcards for all key formulas + self-quiz session"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Day 5: 5 applied word problems — review all errors with solutions"</span><br>
+&nbsp;&nbsp;<span class="t-obj">]</span><br>
+<span class="t-obj">}</span>
+    </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     CTA
+══════════════════════════════════════ -->
+<div class="h-cta fade-in">
+    <div class="h-cta-glow"></div>
+    <h2>Ready to analyse your performance?</h2>
+    <p>Takes under 60 seconds. No account required.</p>
+    <a href="{% url 'biometric_scan' %}" class="btn-hp btn-hp-primary" style="position:relative;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5,3 19,12 5,21"/></svg>
+        Start Analysis — Free
+    </a>
+    <p class="h-cta-note">POWERED BY GROQ &nbsp;·&nbsp; TESSERACT OCR &nbsp;·&nbsp; DJANGO 6 &nbsp;·&nbsp; CHART.JS</p>
+</div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+<script>
+/* ════════════════════════════════════════
+   1. Animated grid canvas
+════════════════════════════════════════ */
+(function () {
+    const canvas = document.getElementById("heroCanvas");
+    const ctx    = canvas.getContext("2d");
+    let W, H, dots = [];
+
+    function resize() {
+        W = canvas.width  = canvas.offsetWidth;
+        H = canvas.height = canvas.offsetHeight;
+    }
+
+    function initDots(n = 60) {
+        dots = [];
+        for (let i = 0; i < n; i++) {
+            dots.push({
+                x:  Math.random() * W,
+                y:  Math.random() * H,
+                vx: (Math.random() - 0.5) * 0.35,
+                vy: (Math.random() - 0.5) * 0.35,
+                r:  Math.random() * 1.5 + 0.5,
+            });
+        }
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, W, H);
+        // Draw connection lines
+        for (let i = 0; i < dots.length; i++) {
+            for (let j = i + 1; j < dots.length; j++) {
+                const dx = dots[i].x - dots[j].x;
+                const dy = dots[i].y - dots[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 130) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(0,212,255,${(1 - dist / 130) * 0.4})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.moveTo(dots[i].x, dots[i].y);
+                    ctx.lineTo(dots[j].x, dots[j].y);
+                    ctx.stroke();
+                }
+            }
+        }
+        // Draw dots
+        dots.forEach(d => {
+            ctx.beginPath();
+            ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(0,212,255,0.6)";
+            ctx.fill();
+            // Move
+            d.x += d.vx;
+            d.y += d.vy;
+            if (d.x < 0 || d.x > W) d.vx *= -1;
+            if (d.y < 0 || d.y > H) d.vy *= -1;
+        });
+        requestAnimationFrame(draw);
+    }
+
+    window.addEventListener("resize", () => { resize(); initDots(); });
+    resize();
+    initDots();
+    draw();
+})();
+
+
+/* ════════════════════════════════════════
+   2. Typing effect
+════════════════════════════════════════ */
+(function () {
+    const phrases = [
+        "Neural Academic Diagnostic Engine",
+        "Powered by Groq LLM",
+        "OCR · Heuristics · AI Insights",
+        "Know Why. Know How. Score Higher.",
+    ];
+    const el = document.getElementById("typingText");
+    let pi = 0, ci = 0, deleting = false;
+
+    function tick() {
+        const phrase = phrases[pi];
+        if (!deleting) {
+            el.textContent = phrase.slice(0, ++ci);
+            if (ci === phrase.length) { deleting = true; setTimeout(tick, 1800); return; }
+            setTimeout(tick, 55);
+        } else {
+            el.textContent = phrase.slice(0, --ci);
+            if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; }
+            setTimeout(tick, 28);
+        }
+    }
+    tick();
+})();
+
+
+/* ════════════════════════════════════════
+   3. Scroll-triggered fade-in
+════════════════════════════════════════ */
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            e.target.classList.add("visible");
+            observer.unobserve(e.target);
+        }
+    });
+}, { threshold: 0.12 });
+
+document.querySelectorAll(".fade-in").forEach(el => observer.observe(el));
+
+
+/* ════════════════════════════════════════
+   4. Animated counter
+════════════════════════════════════════ */
+function animateCounter(el) {
+    const target = parseInt(el.dataset.target, 10);
+    const prefix = el.dataset.prefix || "";
+    const suffix = el.dataset.suffix || "";
+    let current  = 0;
+    const step   = Math.max(1, Math.ceil(target / 50));
+    const timer  = setInterval(() => {
+        current = Math.min(current + step, target);
+        el.innerHTML = prefix + current + suffix;
+        if (current >= target) clearInterval(timer);
+    }, 30);
+}
+
+const statObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            e.target.querySelectorAll("[data-target]").forEach(animateCounter);
+            statObserver.unobserve(e.target);
+        }
+    });
+}, { threshold: 0.3 });
+
+document.querySelectorAll(".h-stats").forEach(el => statObserver.observe(el));
+</script>
+{% endblock %}

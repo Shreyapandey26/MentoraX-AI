@@ -1,0 +1,48 @@
+SUBJECT: Mathematics
+CATEGORY: Subject-Specific Study Strategies
+
+Mathematics requires consistent daily practice rather than bulk studying before exams.
+The most effective method for mathematics is solving problems, not just reading theory.
+
+CORE WEAK AREAS IN MATHEMATICS:
+- Algebra: Students struggle with simultaneous equations, quadratic equations, and factorisation.
+  Strategy: Practice 5 equations per day. Start with simpler forms before complex expressions.
+- Calculus: Differentiation and integration concepts need visual understanding first.
+  Strategy: Watch 10-minute concept videos before attempting problems. Draw graphs manually.
+- Trigonometry: Memorising all formulas at once causes confusion.
+  Strategy: Use a formula sheet and derive each identity once by hand to understand the logic.
+- Geometry: Proof-based questions require step-by-step logical thinking.
+  Strategy: Read solved proofs aloud and then attempt the same proof from memory next day.
+- Statistics: Students confuse mean, median, mode in applied problems.
+  Strategy: Create a comparison table and solve 3 problems of each type daily.
+
+STUDY TECHNIQUE FOR MATHEMATICS:
+1. Active Recall: Attempt every problem before looking at the solution.
+2. Spaced Repetition: Revisit a topic after 1 day, 3 days, and 7 days.
+3. Error Journal: Keep a dedicated notebook of mistakes. Review before every exam.
+4. Timed Practice: Set a 2-minute timer per mark. Build exam-speed habit.
+5. Concept Maps: Draw relationships between algebra, functions, and calculus visually.
+
+FOR LOW SCORERS IN MATHEMATICS (below 50%):
+- Start with Class 9 basics even if in higher grade. Weak foundations cause cascading failure.
+- Solve 1 previous year paper per week under timed conditions.
+- Seek help for problems you cannot solve within 10 minutes — do not waste time stuck.
+
+FOR AVERAGE SCORERS IN MATHEMATICS (50-74%):
+- Identify which topics you score highest in and target them for full marks.
+- Practice higher-order application problems from reference books.
+- Attempt 2 full mock papers per week.
+
+FOR EXCELLENT SCORERS IN MATHEMATICS (75%+):
+- Attempt Olympiad-level problems for deeper insight.
+- Teach concepts to peers — the Feynman technique improves your own clarity.
+- Focus on speed and accuracy for competitive exam preparation.
+
+RECOMMENDED DAILY ROUTINE FOR MATHEMATICS:
+Day 1: Revise 1 chapter theory (30 min) + solve 10 NCERT problems
+Day 2: Solve 1 previous year paper section
+Day 3: Error review from previous days + 5 new application problems
+Day 4: Timed full chapter test
+Day 5: Weak area targeted practice
+
+Mathematics performance improves by an average of 15-20% with consistent 3-week practice.

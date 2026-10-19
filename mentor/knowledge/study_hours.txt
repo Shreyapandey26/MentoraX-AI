@@ -1,0 +1,58 @@
+CATEGORY: Study Hours Optimisation and Habit Building
+
+RESEARCH ON STUDY HOURS AND PERFORMANCE:
+- Optimal study hours for college students: 15-25 hours per week for academic success.
+- Below 7 hours per week: Very high risk of failure regardless of natural ability.
+- 7-14 hours per week: Moderate performance, usually results in average-tier scores.
+- 15-25 hours per week: Associated with above-average to excellent academic performance.
+- Above 30 hours per week (without proper breaks): Burnout risk, diminishing returns.
+
+THE QUALITY VS QUANTITY PROBLEM:
+A student studying 15 focused hours using active recall methods outperforms
+a student studying 25 hours passively re-reading notes or highlighting text.
+Highlight-only studying is the least effective method despite being the most common.
+The most effective study methods in order: Practice testing > Spaced repetition > Elaborative interrogation > Active recall > Interleaving topics.
+
+BUILDING A STUDY HABIT FROM SCRATCH:
+If you currently study less than 5 hours per week, do not try to jump to 20 hours immediately.
+Week 1: Commit to just 1 hour of focused study daily — no distractions, door closed.
+Week 2: Increase to 1.5 hours daily.
+Week 3: Add a second session of 1 hour.
+Week 4 onwards: Gradually build to your target with 1 rest day per week.
+Habit formation research: it takes 18-66 days to form a new habit. Be patient.
+
+EFFECTIVE DAILY STUDY SCHEDULE TEMPLATE:
+Morning (6:00-8:00): Hardest subject when mind is freshest — problem solving and new concepts.
+After college (5:00-7:00): Medium difficulty — review notes, practice questions.
+Evening (8:00-9:30): Easiest subject or revision — consolidation, flashcard review.
+Never study past 11 PM — memory consolidation during sleep requires adequate sleep time.
+
+ELIMINATING STUDY DISTRACTIONS:
+Phone in another room (not silent — another room) improves focus by 26% (research proven).
+Use app blockers: Forest, Cold Turkey, or Stay Focused during study sessions.
+Study in the same place every day — location becomes a contextual cue for focus.
+Tell family or roommates your study schedule — social accountability reduces interruptions.
+
+THE HIGH STUDY HOURS BUT LOW MARKS PARADOX:
+If studying 15+ hours per week but scoring below 50%, the method is the problem, not the effort.
+Diagnosis checklist:
+- Are you re-reading notes or actively recalling from memory?
+- Are you solving problems or just reading solved examples?
+- Are you studying continuously for 3+ hours without breaks? (Reduces retention significantly)
+- Are you sleeping less than 6 hours because of late-night study? (Impairs memory consolidation)
+- Are you studying in a noisy or distracting environment?
+Each "yes" above is a method error that can be corrected.
+
+STUDY GROUP EFFECTIVENESS:
+Study groups of 3-5 people are 25% more effective than solo study when structured properly.
+Rules for effective study groups:
+- Each person attempts problems individually before discussing.
+- Take turns explaining concepts — do not just share answers.
+- Meet for maximum 90 minutes per session.
+- Stay on topic — set a clear agenda before each session.
+- Choose peers who are serious and at your level or slightly above.
+
+TRACKING STUDY PROGRESS:
+Keep a simple study log: date, subject, topic, hours, problems attempted, problems correct.
+Reviewing this weekly shows you where your time actually goes versus where you intend it to go.
+Students who track their study time improve their scores by an average of 12% within 4 weeks.

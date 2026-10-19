@@ -1,0 +1,39 @@
+SUBJECT: Chemistry
+CATEGORY: Subject-Specific Study Strategies
+
+Chemistry combines memorisation (nomenclature, reactions) with understanding (mechanisms, periodic trends).
+Balancing both aspects is key to scoring above 70%.
+
+CORE WEAK AREAS IN CHEMISTRY:
+- Organic Chemistry: Reaction mechanisms and named reactions (Aldol, Cannizzaro, etc.) are high weightage.
+  Strategy: Write each reaction mechanism 3 times. Group reactions by functional group, not by name.
+- Electrochemistry: Students confuse EMF, cell potential, and Gibbs energy relationships.
+  Strategy: Create a relationship map: ΔG → Ecell → Keq. Solve 5 numericals daily.
+- Chemical Equilibrium: Le Chatelier's principle application in different scenarios.
+  Strategy: Create a table of equilibrium shifts for temperature, pressure, concentration changes.
+- Periodic Table Trends: Ionisation energy, atomic radius, electronegativity patterns.
+  Strategy: Memorise trends with mnemonics. Verify each trend with 3 examples.
+- Coordination Compounds: IUPAC naming rules seem complex but follow strict patterns.
+  Strategy: Practice naming 5 complexes daily using the step-by-step naming rule sheet.
+
+STUDY TECHNIQUE FOR CHEMISTRY:
+1. Reaction Flashcards: Write reaction on front, conditions + product on back. Review 10 daily.
+2. Periodic Table Mastery: Know groups 1, 2, 13-18 and transition metals with their key properties.
+3. NCERT First: 70% of chemistry exam questions come directly from NCERT text and examples.
+4. Daily Equation Balancing: Balance 5 equations daily to build speed.
+5. Colour Code Notes: Organic (green), Inorganic (blue), Physical (orange) — easy revision.
+
+FOR LOW SCORERS IN CHEMISTRY (below 50%):
+- Read NCERT line by line. Underline every reaction, observation, and conclusion.
+- Focus on chapters: Some Basic Concepts, Atomic Structure, Chemical Bonding (foundation chapters).
+- Memorise at least 20 key reactions — these alone can gain 15-20 marks.
+
+FOR AVERAGE SCORERS IN CHEMISTRY (50-74%):
+- Complete all NCERT exercise and additional questions.
+- Focus on Physical Chemistry numericals — they have fixed formulas and guarantee marks.
+- Start solving previous year papers to identify repeated question patterns.
+
+FOR EXCELLENT SCORERS IN CHEMISTRY (75%+):
+- Attempt JEE Advanced level organic mechanisms for depth.
+- Study exception cases in periodic trends — often asked in high-difficulty questions.
+- Create a master formula sheet for Physical Chemistry and revise daily.

@@ -1,0 +1,25 @@
+# MentoraX AI - Project Dependencies
+# Install with: pip install -r requirements.txt
+
+Django==6.0.2
+
+# Pillow is needed for ImageField (OCR module placeholder)
+Pillow>=10.0.0
+
+# Groq API client — fast LLM inference
+groq>=0.9.0
+
+# Load environment variables from .env file
+python-dotenv>=1.0.0
+
+# OCR — reads text from marksheet images (requires Tesseract binary installed)
+# Install Tesseract: sudo apt install tesseract-ocr
+pytesseract>=0.3.10
+
+# RAG pipeline — LangChain + BM25 retriever + Groq LLM
+langchain>=0.3.0
+langchain-community>=0.3.0
+langchain-core>=0.3.0
+langchain-groq>=0.2.0
+langchain-text-splitters>=0.3.0
+rank_bm25>=0.2.2

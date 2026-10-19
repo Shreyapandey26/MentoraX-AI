@@ -1,0 +1,355 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}Neural HUD Dashboard{% endblock %}
+
+{% block nav_links %}
+    <a href="{% url 'home_page' %}" class="nav-link">Home</a>
+    <a href="{% url 'data_input' %}" class="nav-link">New Analysis</a>
+    <a href="{% url 'dashboard' %}" class="nav-link active">Dashboard</a>
+    <a href="{% url 'about_page' %}" class="nav-link">About</a>
+{% endblock %}
+
+{% block content %}
+
+<!--
+    MODULE 4: Neural HUD (Visualization Module)
+    ─────────────────────────────────────────────
+    Chart.js renders:
+      - Doughnut chart: marks obtained vs missed
+      - Bar chart: performance %, attendance %, study effort %
+    Django passes chart data as template variables, which we
+    embed as JavaScript variables below.
+-->
+
+<div class="page-header">
+    <h1 class="page-title">
+        <span class="title-icon">🧠</span>
+        Neural HUD — Academic Diagnostic Report
+    </h1>
+    <p class="page-sub">
+        Heuristic analysis complete for <strong>{{ student_name }}</strong>
+        &mdash; Subject: <strong>{{ subject_name }}</strong>
+    </p>
+</div>
+
+
+<!-- ─── Row 1: Key Metric Cards ─── -->
+<div class="metrics-row">
+
+    <!-- Performance % -->
+    <div class="metric-card">
+        <p class="metric-label">Performance Score</p>
+        <p class="metric-value" style="color: {{ analysis.tier_color }};">
+            {{ analysis.percentage }}%
+        </p>
+        <p class="metric-sub">{{ marks_obtained }} / {{ total_marks }} marks</p>
+    </div>
+
+    <!-- Tier Badge -->
+    <div class="metric-card tier-card" style="border-color: {{ analysis.tier_color }};">
+        <p class="metric-label">Academic Tier</p>
+        <p class="tier-badge" style="color: {{ analysis.tier_color }};">
+            {{ analysis.tier_icon }} {{ analysis.tier }}
+        </p>
+        <p class="metric-sub">
+            {% if analysis.tier == "Excellent" %}
+                Performance above 75% — Outstanding
+            {% elif analysis.tier == "Average" %}
+                Performance 50–74% — Needs Improvement
+            {% else %}
+                Performance below 50% — Urgent Attention Required
+            {% endif %}
+        </p>
+    </div>
+
+    <!-- Attendance -->
+    <div class="metric-card">
+        <p class="metric-label">Attendance</p>
+        <p class="metric-value
+            {% if attendance_percent >= 75 %}color-green{% else %}color-red{% endif %}">
+            {{ attendance_percent }}%
+        </p>
+        <p class="metric-sub">
+            {% if attendance_percent >= 75 %}Within acceptable range{% else %}Below 75% threshold{% endif %}
+        </p>
+    </div>
+
+    <!-- Study Hours -->
+    <div class="metric-card">
+        <p class="metric-label">Study Hours / Week</p>
+        <p class="metric-value
+            {% if study_hours_per_week >= 15 %}color-green{% elif study_hours_per_week >= 7 %}color-orange{% else %}color-red{% endif %}">
+            {{ study_hours_per_week }} hrs
+        </p>
+        <p class="metric-sub">
+            {% if study_hours_per_week >= 20 %}High effort — excellent{% elif study_hours_per_week >= 10 %}Moderate — can improve{% else %}Low — needs increase{% endif %}
+        </p>
+    </div>
+
+</div>
+
+
+<!-- ─── Row 2: Charts ─── -->
+<div class="charts-row">
+
+    <!-- Doughnut Chart: Marks Accuracy -->
+    <div class="chart-card">
+        <div class="chart-card-header">
+            <h3>Marks Accuracy Chart</h3>
+            <span class="chart-badge">Doughnut</span>
+        </div>
+        <div class="chart-wrap doughnut-wrap">
+            <canvas id="doughnutChart"></canvas>
+            <!-- Center label inside doughnut -->
+            <div class="doughnut-center">
+                <p class="dc-percent">{{ analysis.percentage }}%</p>
+                <p class="dc-label">Score</p>
+            </div>
+        </div>
+        <div class="chart-legend">
+            <span class="leg-dot" style="background:#00d4ff;"></span> Obtained: {{ marks_obtained }}
+            &nbsp;&nbsp;
+            <span class="leg-dot" style="background:#1a1a3e;"></span> Missed: {{ analysis.doughnut_data.missed }}
+        </div>
+    </div>
+
+    <!-- Bar Chart: Multi-Metric Comparison -->
+    <div class="chart-card chart-card-wide">
+        <div class="chart-card-header">
+            <h3>Multimodal Performance Analysis</h3>
+            <span class="chart-badge">Bar Graph</span>
+        </div>
+        <div class="chart-wrap">
+            <canvas id="barChart"></canvas>
+        </div>
+        <p class="chart-note">
+            Study Effort % = study hours normalized against 30 hrs/week benchmark.
+        </p>
+    </div>
+
+</div>
+
+
+<!-- ─── Row 3: Correlation Findings ─── -->
+<div class="section-card">
+    <div class="section-card-header">
+        <h3>🔍 Correlation Mapping — Habits vs. Results</h3>
+        <p>The Diagnostic Engine identified the following patterns in your data:</p>
+    </div>
+
+    <div class="correlations-grid">
+        {% for item in analysis.correlations %}
+            <div class="correlation-item correlation-{{ item.type }}">
+                <div class="corr-icon">{{ item.icon }}</div>
+                <div class="corr-text">
+                    <p class="corr-finding">{{ item.finding }}</p>
+                    <p class="corr-detail">{{ item.detail }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+<!-- ─── Row 4: Heuristic Recommendations ─── -->
+<div class="section-card">
+    <div class="section-card-header">
+        <h3>🎯 Study Strategy Recommendations</h3>
+        <p>Personalized corrective actions based on your performance tier and habits:</p>
+    </div>
+
+    <div class="recs-list">
+        {% for rec in analysis.recommendations %}
+            <div class="rec-item">{{ rec }}</div>
+        {% endfor %}
+    </div>
+</div>
+
+
+<!-- ─── Row 5: Groq AI Analysis ─── -->
+{% if analysis.ai_error %}
+<div class="section-card ai-error-card">
+    <div class="section-card-header">
+        <h3>🤖 AI Analysis — Unavailable</h3>
+    </div>
+    <p class="ai-error-msg">⚠ {{ analysis.ai_error }}</p>
+    <p class="ai-error-hint">Open <code>.env</code> and set your <code>GROQ_API_KEY</code> to enable AI-powered insights.</p>
+</div>
+{% else %}
+
+<!-- AI Summary -->
+<div class="section-card ai-card">
+    <div class="section-card-header">
+        <h3>🤖 RAG + Groq AI — Personalised Summary</h3>
+        <span class="ai-badge">llama-3.3-70b-versatile</span>
+    </div>
+    <p class="ai-summary-text">{{ analysis.ai_summary }}</p>
+
+    {% if analysis.ai_sources %}
+    <div class="rag-sources">
+        <span class="rag-sources-label">📚 Knowledge Retrieved From:</span>
+        {% for src in analysis.ai_sources %}
+            <span class="rag-source-tag">{{ src }}</span>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+<!-- AI Recommendations -->
+{% if analysis.ai_recommendations %}
+<div class="section-card ai-card">
+    <div class="section-card-header">
+        <h3>💡 AI Deep-Dive Recommendations</h3>
+        <p>Generated by Groq LLM based on your specific data:</p>
+    </div>
+    <div class="recs-list">
+        {% for rec in analysis.ai_recommendations %}
+            <div class="rec-item ai-rec-item">{{ rec }}</div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<!-- AI 5-Day Study Plan -->
+{% if analysis.ai_study_plan %}
+<div class="section-card ai-card">
+    <div class="section-card-header">
+        <h3>📅 AI 5-Day Study Plan</h3>
+        <p>A concrete weekly plan tailored to your subject and performance:</p>
+    </div>
+    <div class="study-plan-list">
+        {% for day in analysis.ai_study_plan %}
+            <div class="study-plan-item">{{ day }}</div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% endif %}
+
+
+<!-- ─── Actions ─── -->
+<div class="dashboard-actions">
+    <a href="{% url 'data_input' %}" class="btn-primary">
+        ← Run New Analysis
+    </a>
+    <button onclick="window.print()" class="btn-secondary">
+        🖨 Print Report
+    </button>
+    <a href="{% url 'logout_user' %}" class="btn-danger">
+        Logout Session
+    </a>
+</div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+<!--
+    Pass Django template variables to JavaScript.
+    We use JSON-safe values (numbers) so no quotes needed.
+-->
+<script>
+    // Doughnut chart data from Django
+    const doughnutData = {
+        obtained: {{ analysis.doughnut_data.obtained }},
+        missed:   {{ analysis.doughnut_data.missed }},
+    };
+
+    // Bar chart data from Django
+    const barData = {
+        labels: {{ analysis.bar_data.labels|safe }},   // e.g. ["Performance %", ...]
+        values: {{ analysis.bar_data.values|safe }},   // e.g. [72.5, 78.0, 46.7]
+    };
+
+    // ─── Chart 1: Doughnut (Marks Accuracy) ───
+    const dCtx = document.getElementById("doughnutChart").getContext("2d");
+    new Chart(dCtx, {
+        type: "doughnut",
+        data: {
+            labels: ["Marks Obtained", "Marks Missed"],
+            datasets: [{
+                data: [doughnutData.obtained, doughnutData.missed],
+                backgroundColor: ["#00d4ff", "#1a1a3e"],
+                borderColor: ["#00d4ff", "#2a2a5e"],
+                borderWidth: 2,
+                hoverOffset: 8,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            cutout: "70%",  // makes it a doughnut, not a pie
+            plugins: {
+                legend: {
+                    display: false,  // we have a custom legend below
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(ctx) {
+                            return `${ctx.label}: ${ctx.parsed}`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // ─── Chart 2: Bar (Multi-metric) ───
+    const bCtx = document.getElementById("barChart").getContext("2d");
+    new Chart(bCtx, {
+        type: "bar",
+        data: {
+            labels: barData.labels,
+            datasets: [{
+                label: "Score (out of 100)",
+                data: barData.values,
+                backgroundColor: [
+                    "#00d4ff",   // Performance - cyan
+                    "#00ff88",   // Attendance - green
+                    "#aa88ff",   // Study effort - purple
+                ],
+                borderColor: [
+                    "#00d4ff",
+                    "#00ff88",
+                    "#aa88ff",
+                ],
+                borderWidth: 2,
+                borderRadius: 6,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    grid: {
+                        color: "rgba(255,255,255,0.05)",
+                    },
+                    ticks: {
+                        color: "#888",
+                        callback: function(val) { return val + "%"; }
+                    }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: "#aaa" }
+                }
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(ctx) {
+                            return `${ctx.parsed.y.toFixed(1)}%`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

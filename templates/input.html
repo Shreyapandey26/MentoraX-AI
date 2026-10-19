@@ -1,0 +1,265 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}Data Acquisition{% endblock %}
+
+{% block nav_links %}
+    <a href="{% url 'home_page' %}" class="nav-link">Home</a>
+    <a href="{% url 'data_input' %}" class="nav-link active">Data Input</a>
+    <a href="{% url 'about_page' %}" class="nav-link">About</a>
+{% endblock %}
+
+{% block content %}
+
+<!--
+    MODULE 2: Data Acquisition & OCR Module
+    ─────────────────────────────────────────
+    Students enter their academic data here.
+    The OCR section is a placeholder for future marksheet scanning.
+    Form validation happens in forms.py (marks > total is rejected).
+-->
+
+<div class="page-header">
+    <h1 class="page-title">
+        <span class="title-icon">📡</span>
+        Data Acquisition Interface
+    </h1>
+    <p class="page-sub">
+        Enter academic variables below. All fields are required for accurate diagnostic output.
+    </p>
+</div>
+
+<div class="input-layout">
+
+    <!-- ─── Left: Main Data Form ─── -->
+    <div class="input-card">
+        <div class="card-header">
+            <span class="card-icon">⬡</span>
+            <h2>Academic Data Entry</h2>
+        </div>
+
+        <form method="POST" action="{% url 'data_input' %}" enctype="multipart/form-data" id="dataForm">
+            {% csrf_token %}
+
+            <!-- Non-field errors (e.g. marks > total) -->
+            {% if form.non_field_errors %}
+                <div class="error-banner">
+                    {% for error in form.non_field_errors %}
+                        <p>⚠ {{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Student Identification -->
+            <div class="section-label">Student Identification</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="field-label">{{ form.student_id.label }}</label>
+                    {{ form.student_id }}
+                    {% if form.student_id.errors %}
+                        <p class="field-error">{{ form.student_id.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label class="field-label">{{ form.subject_name.label }}</label>
+                    {{ form.subject_name }}
+                    {% if form.subject_name.errors %}
+                        <p class="field-error">{{ form.subject_name.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Marks Section -->
+            <div class="section-label">Examination Score</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="field-label">{{ form.marks_obtained.label }}</label>
+                    {{ form.marks_obtained }}
+                    {% if form.marks_obtained.errors %}
+                        <p class="field-error">{{ form.marks_obtained.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label class="field-label">{{ form.total_marks.label }}</label>
+                    {{ form.total_marks }}
+                    {% if form.total_marks.errors %}
+                        <p class="field-error">{{ form.total_marks.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Behavioral Metrics -->
+            <div class="section-label">Behavioral Metrics</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="field-label">{{ form.attendance_percent.label }}</label>
+                    {{ form.attendance_percent }}
+                    {% if form.attendance_percent.errors %}
+                        <p class="field-error">{{ form.attendance_percent.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label class="field-label">{{ form.study_hours_per_week.label }}</label>
+                    {{ form.study_hours_per_week }}
+                    {% if form.study_hours_per_week.errors %}
+                        <p class="field-error">{{ form.study_hours_per_week.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <button type="submit" class="btn-primary btn-full">
+                <span>⬡</span> Run Diagnostic Engine →
+            </button>
+        </form>
+    </div>
+
+    <!-- ─── Right: OCR Module + Info ─── -->
+    <div class="input-sidebar">
+
+        <!-- OCR Scanner — Live -->
+        <div class="ocr-card">
+            <div class="ocr-badge">OCR ENGINE ACTIVE</div>
+            <h3 class="ocr-title">📄 Marksheet Scanner</h3>
+            <p class="ocr-desc">
+                Upload your marksheet image and the OCR engine will automatically
+                extract marks, student ID, and subject — then fill the form for you.
+            </p>
+
+            <!-- Image upload + preview -->
+            <div class="form-group">
+                <label class="field-label">{{ form.marksheet_image.label }}</label>
+                {{ form.marksheet_image }}
+            </div>
+
+            <!-- Image preview -->
+            <div id="ocrPreviewWrap" style="display:none; margin: 10px 0;">
+                <img id="ocrPreview" src="" alt="Preview"
+                     style="max-width:100%; border-radius:8px; border:1px solid var(--border);" />
+            </div>
+
+            <!-- Scan button -->
+            <button type="button" id="ocrScanBtn" class="btn-ocr" onclick="runOCR()">
+                ⬡ Scan Marksheet
+            </button>
+
+            <!-- Status / result -->
+            <div id="ocrStatus" class="ocr-status" style="display:none;"></div>
+            <div id="ocrResult" class="ocr-result" style="display:none;"></div>
+        </div>
+
+        <!-- System Info -->
+        <div class="info-card">
+            <h3>📌 Data Validation Rules</h3>
+            <ul class="info-list">
+                <li>Marks obtained cannot exceed total marks</li>
+                <li>Attendance must be between 0 – 100%</li>
+                <li>Study hours should be realistic (0 – 168 hrs/week)</li>
+                <li>All fields are required for accurate diagnostics</li>
+            </ul>
+        </div>
+
+        <!-- Authorized user reminder -->
+        <div class="info-card highlight-card">
+            <p class="authorized-label">AUTHORIZED SESSION</p>
+            <p class="authorized-name">{{ student_name }}</p>
+            <p class="authorized-note">Session active — data will be linked to this user.</p>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// ─── Image preview when file selected ───────────────────
+document.getElementById("marksheetInput").addEventListener("change", function () {
+    const file = this.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+        document.getElementById("ocrPreview").src = e.target.result;
+        document.getElementById("ocrPreviewWrap").style.display = "block";
+    };
+    reader.readAsDataURL(file);
+    document.getElementById("ocrStatus").style.display = "none";
+    document.getElementById("ocrResult").style.display = "none";
+});
+
+// ─── Run OCR ─────────────────────────────────────────────
+function runOCR() {
+    const input = document.getElementById("marksheetInput");
+    if (!input.files.length) {
+        alert("Please select a marksheet image first.");
+        return;
+    }
+
+    const btn    = document.getElementById("ocrScanBtn");
+    const status = document.getElementById("ocrStatus");
+    const result = document.getElementById("ocrResult");
+
+    btn.disabled = true;
+    btn.textContent = "⏳ Scanning...";
+    status.style.display = "block";
+    status.className = "ocr-status ocr-scanning";
+    status.innerHTML = "🔍 Running OCR engine... please wait";
+    result.style.display = "none";
+
+    const formData = new FormData();
+    formData.append("marksheet", input.files[0]);
+    formData.append("csrfmiddlewaretoken", "{{ csrf_token }}");
+
+    fetch("{% url 'ocr_scan' %}", { method: "POST", body: formData })
+    .then(r => r.json())
+    .then(data => {
+        btn.disabled = false;
+        btn.textContent = "⬡ Scan Marksheet";
+
+        if (!data.success) {
+            status.className = "ocr-status ocr-fail";
+            status.innerHTML = "⚠ " + (data.error || "OCR could not extract data. Please fill manually.");
+            return;
+        }
+
+        const filled = [];
+        if (data.marks_obtained !== null) {
+            document.getElementById("id_marks_obtained").value = data.marks_obtained;
+            filled.push("Marks Obtained: <strong>" + data.marks_obtained + "</strong>");
+        }
+        if (data.total_marks !== null) {
+            document.getElementById("id_total_marks").value = data.total_marks;
+            filled.push("Total Marks: <strong>" + data.total_marks + "</strong>");
+        }
+        if (data.student_id) {
+            document.getElementById("id_student_id").value = data.student_id;
+            filled.push("Student ID: <strong>" + data.student_id + "</strong>");
+        }
+        if (data.subject_name) {
+            document.getElementById("id_subject_name").value = data.subject_name;
+            filled.push("Subject: <strong>" + data.subject_name + "</strong>");
+        }
+
+        if (filled.length) {
+            status.className = "ocr-status ocr-success";
+            status.innerHTML = "✅ OCR complete — " + filled.length + " field(s) filled automatically";
+            result.style.display = "block";
+            result.innerHTML = "<p class='ocr-fields-label'>Extracted Data:</p>" +
+                filled.map(f => "<div class='ocr-field-item'>" + f + "</div>").join("") +
+                "<p class='ocr-verify-note'>⚠ Please verify the extracted values before submitting.</p>";
+        } else {
+            status.className = "ocr-status ocr-fail";
+            status.innerHTML = "⚠ OCR ran but could not find structured data. Please fill manually.";
+        }
+    })
+    .catch(err => {
+        btn.disabled = false;
+        btn.textContent = "⬡ Scan Marksheet";
+        status.className = "ocr-status ocr-fail";
+        status.innerHTML = "⚠ Network error: " + err.message;
+    });
+}
+</script>
+{% endblock %}

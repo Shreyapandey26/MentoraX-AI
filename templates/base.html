@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!--
+    MentoraX AI - Base Template
+    All pages extend this. It loads CSS and gives us a consistent header.
+    {{ block }} tags are where child templates inject their content.
+-->
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>MentoraX AI — {% block page_title %}Neural Engine{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <!-- ─── Top Navigation Bar ─── -->
+    <nav class="navbar">
+        <a href="{% url 'home_page' %}" class="nav-brand" style="text-decoration:none;">
+            <span class="brand-icon">⬡</span>
+            <span class="brand-name">MentoraX <span class="brand-ai">AI</span></span>
+        </a>
+
+        <div class="nav-center">
+            {% block nav_links %}{% endblock %}
+        </div>
+
+        <!-- User chip: shows who is logged in -->
+        <div class="nav-right">
+            {% if request.session.authorized %}
+                <div class="user-chip">
+                    <span class="user-dot"></span>
+                    <span>{{ request.session.student_name }}</span>
+                </div>
+                <a href="{% url 'logout_user' %}" class="btn-logout">Logout</a>
+            {% else %}
+                <a href="{% url 'biometric_scan' %}" class="btn-logout" style="color:var(--cyan);border-color:rgba(0,212,255,0.3);">Get Started →</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- ─── Flash Messages (Django messages framework) ─── -->
+    {% if messages %}
+        <div class="flash-messages">
+            {% for msg in messages %}
+                <div class="flash flash-{{ msg.tags }}">{{ msg }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- ─── Main Page Content ─── -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- ─── Footer ─── -->
+    <footer class="footer">
+        <p>
+            MentoraX <span style="color:var(--cyan);">AI</span>
+            &nbsp;·&nbsp; Neural Academic Engine v1.0
+            &nbsp;·&nbsp; <a href="{% url 'home_page' %}" style="color:var(--cyan-dim);text-decoration:none;">Home</a>
+            &nbsp;·&nbsp; <a href="{% url 'about_page' %}" style="color:var(--cyan-dim);text-decoration:none;">About</a>
+            &nbsp;·&nbsp; Powered by Groq &amp; Tesseract OCR
+        </p>
+    </footer>
+
+    <!-- Chart.js CDN (loaded on every page, used on dashboard) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,51 @@
+CATEGORY: General Study Strategies for All Subjects
+
+SPACED REPETITION SYSTEM (SRS):
+Spaced repetition is the single most evidence-backed study technique for long-term retention.
+Study a topic → Review after 1 day → Review after 3 days → Review after 7 days → Review after 21 days.
+This reduces forgetting rate by 60-70% compared to single-session studying.
+Tools: Anki flashcard app (free), physical index cards.
+
+ACTIVE RECALL TECHNIQUE:
+Do not re-read notes. Instead, close the book and write everything you remember about a topic.
+Active recall improves retention 2x compared to passive re-reading.
+Method: Read chapter summary → Close book → Write 10 key points from memory → Check accuracy.
+
+POMODORO TECHNIQUE:
+Work in 25-minute focused blocks followed by 5-minute breaks.
+After 4 Pomodoros, take a 30-minute break.
+This maintains concentration and prevents mental fatigue during long study sessions.
+
+FEYNMAN TECHNIQUE:
+Explain a concept as if teaching it to a 10-year-old.
+If you cannot explain it simply, you do not understand it yet.
+Step 1: Write the concept in your own words. Step 2: Identify gaps. Step 3: Re-study gaps.
+
+CORNELL NOTE-TAKING METHOD:
+Divide each page: narrow left column (cues/keywords), wide right column (notes), bottom row (summary).
+Write notes during study, fill cues after, write summary 24 hours later.
+This systematic approach improves recall by 40%.
+
+EXAM PREPARATION TIMELINE:
+- 8 weeks before exam: Complete entire syllabus first reading
+- 6 weeks before: Start topic-wise revision with practice questions
+- 4 weeks before: Begin solving previous year papers (full length, timed)
+- 2 weeks before: Focus on weak areas, formula revision, error notebook review
+- 1 week before: Light revision only, full sleep, no new topics
+- Day before: Review formula sheet, confidence-building, early sleep
+
+SLEEP AND PERFORMANCE:
+Students who sleep 7-8 hours retain 40% more information than those who sleep 5-6 hours.
+Memory consolidation happens during REM sleep — cramming while sleep-deprived is counterproductive.
+Schedule study sessions in morning (highest alertness) and early evening.
+Avoid studying after 11 PM — diminishing returns with high cognitive cost.
+
+GOAL SETTING FOR STUDY SESSIONS:
+Before each session, write: "Today I will complete [specific task] by [time]."
+Vague goals ("study chemistry") lead to distraction. Specific goals drive focus.
+At session end, mark completion and note what remains — creates accountability.
+
+MANAGING EXAM ANXIETY:
+- Breathing technique: 4 counts inhale, 7 counts hold, 8 counts exhale — reduces cortisol.
+- Reframe anxiety as excitement — same physiological response, different label.
+- Prepare an "anxiety plan": if mind goes blank, skip and return, use process of elimination.

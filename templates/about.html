@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}About — MentoraX AI{% endblock %}
+
+{% block nav_links %}
+    <a href="{% url 'home_page' %}" class="nav-link">Home</a>
+    <a href="{% url 'biometric_scan' %}" class="nav-link">Get Started</a>
+    <a href="{% url 'about_page' %}" class="nav-link active">About</a>
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1 class="page-title">
+        <span class="title-icon">ℹ</span>
+        About MentoraX AI
+    </h1>
+    <p class="page-sub">
+        An intelligent academic diagnostic system built for students and educators.
+    </p>
+</div>
+
+
+<!-- ─── Project Overview ─── -->
+<div class="section-card">
+    <div class="section-card-header">
+        <h3>🎯 Project Overview</h3>
+    </div>
+    <p class="about-para">
+        <strong>MentoraX AI</strong> is a web-based academic performance analyser built as a final year project.
+        It goes beyond simply showing marks — it uses a <em>heuristic diagnostic engine</em> to find correlations
+        between study habits and exam results, and a <em>Groq-powered LLM</em> to generate truly personalised
+        recommendations and study plans.
+    </p>
+    <p class="about-para">
+        The core idea: raw marksheets tell you <em>what</em> happened, but MentoraX tells you <em>why</em>
+        — and more importantly, <em>what to do next</em>.
+    </p>
+</div>
+
+
+<!-- ─── Modules ─── -->
+<div class="section-card">
+    <div class="section-card-header">
+        <h3>🧩 System Modules</h3>
+    </div>
+    <div class="about-modules-grid">
+
+        <div class="about-module">
+            <div class="am-num">M1</div>
+            <div class="am-body">
+                <h4>Biometric Authorization</h4>
+                <p>Simulates fingerprint-based student identity verification with an animated scanner UI.
+                   Sets a secure session for the duration of the analysis.</p>
+            </div>
+        </div>
+
+        <div class="about-module">
+            <div class="am-num">M2</div>
+            <div class="am-body">
+                <h4>Data Acquisition + OCR</h4>
+                <p>Students can upload a marksheet image — Tesseract OCR (v4.1) extracts marks, student ID,
+                   and subject automatically. Or data can be entered manually.</p>
+            </div>
+        </div>
+
+        <div class="about-module">
+            <div class="am-num">M3</div>
+            <div class="am-body">
+                <h4>Heuristic Diagnostic Engine</h4>
+                <p>Rule-based engine calculates the performance percentage, classifies into Excellent /
+                   Average / Alert tier, and maps correlations between behavioral metrics and results.</p>
+            </div>
+        </div>
+
+        <div class="about-module am-ai">
+            <div class="am-num" style="background:rgba(124,58,237,0.2);color:#a78bfa;border-color:#7c3aed;">AI</div>
+            <div class="am-body">
+                <h4>Groq LLM Analysis <span class="ai-badge">llama-3.3-70b-versatile</span></h4>
+                <p>The student's data and heuristic findings are sent to Groq's API. The LLM returns a
+                   personalised summary, 5 actionable recommendations, and a 5-day study plan in under 2 seconds.</p>
+            </div>
+        </div>
+
+        <div class="about-module">
+            <div class="am-num">M4</div>
+            <div class="am-body">
+                <h4>Neural HUD Dashboard</h4>
+                <p>Chart.js renders interactive doughnut and bar charts. All analysis results, correlations,
+                   and AI insights are displayed in a cyberpunk-themed dark UI.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- ─── Tech Stack ─── -->
+<div class="section-card">
+    <div class="section-card-header">
+        <h3>🛠 Tech Stack</h3>
+    </div>
+    <div class="tech-grid">
+
+        <div class="tech-item">
+            <span class="tech-icon">🐍</span>
+            <div>
+                <p class="tech-name">Python 3.12</p>
+                <p class="tech-role">Core language</p>
+            </div>
+        </div>
+
+        <div class="tech-item">
+            <span class="tech-icon">🌐</span>
+            <div>
+                <p class="tech-name">Django 6.0.2</p>
+                <p class="tech-role">Web framework — routing, ORM, templates, sessions</p>
+            </div>
+        </div>
+
+        <div class="tech-item">
+            <span class="tech-icon">🤖</span>
+            <div>
+                <p class="tech-name">Groq API</p>
+                <p class="tech-role">LLM inference — llama-3.3-70b-versatile</p>
+            </div>
+        </div>
+
+        <div class="tech-item">
+            <span class="tech-icon">🔤</span>
+            <div>
+                <p class="tech-name">Tesseract OCR v4.1</p>
+                <p class="tech-role">Optical character recognition from marksheet images</p>
+            </div>
+        </div>
+
+        <div class="tech-item">
+            <span class="tech-icon">📊</span>
+            <div>
+                <p class="tech-name">Chart.js 4.4</p>
+                <p class="tech-role">Interactive doughnut and bar charts</p>
+            </div>
+        </div>
+
+        <div class="tech-item">
+            <span class="tech-icon">🗄️</span>
+            <div>
+                <p class="tech-name">SQLite</p>
+                <p class="tech-role">Local database — stores all student records</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- ─── How Tiers Work ─── -->
+<div class="section-card">
+    <div class="section-card-header">
+        <h3>📈 Performance Tier System</h3>
+    </div>
+    <div class="tier-about-row">
+        <div class="tier-about-card" style="border-color:#00ff88;">
+            <p class="tier-badge" style="color:#00ff88;">★ Excellent</p>
+            <p>Score ≥ 75%</p>
+            <p class="tier-about-desc">Outstanding performance. Focus on competitive exams and peer mentoring.</p>
+        </div>
+        <div class="tier-about-card" style="border-color:#ffaa00;">
+            <p class="tier-badge" style="color:#ffaa00;">◆ Average</p>
+            <p>Score 50–74%</p>
+            <p class="tier-about-desc">Good foundation. Targeted effort can push you into Excellent tier.</p>
+        </div>
+        <div class="tier-about-card" style="border-color:#ff4444;">
+            <p class="tier-badge" style="color:#ff4444;">⚠ Alert</p>
+            <p>Score &lt; 50%</p>
+            <p class="tier-about-desc">Immediate intervention needed. AI provides a concrete recovery plan.</p>
+        </div>
+    </div>
+</div>
+
+
+<!-- ─── Built By ─── -->
+<div class="section-card">
+    <div class="section-card-header">
+        <h3>👨‍💻 Built By</h3>
+    </div>
+    <div class="about-built">
+        <p class="about-para">
+            MentoraX AI is a final year engineering project demonstrating:
+            Django MVC architecture, session management, form validation,
+            OCR integration, LLM API usage, and dynamic chart rendering.
+        </p>
+        <div class="built-tags">
+            <span class="built-tag">Final Year Project</span>
+            <span class="built-tag">Django</span>
+            <span class="built-tag">Groq AI</span>
+            <span class="built-tag">OCR</span>
+            <span class="built-tag">Chart.js</span>
+            <span class="built-tag">Neural Academic Engine v1.0</span>
+        </div>
+    </div>
+</div>
+
+
+<!-- ─── CTA ─── -->
+<div class="dashboard-actions" style="margin-top:30px;">
+    <a href="{% url 'biometric_scan' %}" class="btn-primary">⬡ Start Analysis</a>
+    <a href="{% url 'home_page' %}" class="btn-secondary">← Back to Home</a>
+</div>
+
+{% endblock %}

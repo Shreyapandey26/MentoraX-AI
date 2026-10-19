@@ -1,0 +1,39 @@
+SUBJECT: Physics
+CATEGORY: Subject-Specific Study Strategies
+
+Physics is a conceptual subject where formula memorisation without understanding leads to failure.
+Understanding the "why" behind every formula is critical for scoring above 75%.
+
+CORE WEAK AREAS IN PHYSICS:
+- Mechanics: Newton's laws, motion equations, and energy conservation are most commonly tested.
+  Strategy: Draw free body diagrams for every problem before writing equations.
+- Electricity: Ohm's law, Kirchhoff's laws, and circuit analysis require systematic approach.
+  Strategy: Redraw complex circuits step by step. Practice series vs parallel reduction.
+- Optics: Ray diagram drawing is a high-scoring area that students often skip.
+  Strategy: Practice drawing ray diagrams for all 6 mirror and lens cases daily.
+- Thermodynamics: Laws and applications need conceptual clarity first.
+  Strategy: Create a one-page summary of all thermodynamic laws with one real-world example each.
+- Modern Physics: Photoelectric effect, nuclear physics require formula linkage.
+  Strategy: Create a formula card grouped by topic — not alphabetically.
+
+STUDY TECHNIQUE FOR PHYSICS:
+1. Derivation Practice: Derive every major formula at least twice from scratch.
+2. Numerical First: Always attempt numericals before theory MCQs — builds application skill.
+3. Unit Analysis: Check units in every formula substitution to avoid silly errors.
+4. Diagram Habit: For every concept, draw the associated diagram (ray diagram, circuit, graph).
+5. Concept Verification: For every formula, verify it with 2 real-world examples.
+
+FOR LOW SCORERS IN PHYSICS (below 50%):
+- Focus on chapters with highest weightage: Mechanics, Electricity, and Optics (combined ~55% marks).
+- Solve only NCERT exemplar problems — they match exam pattern closely.
+- Find a study partner to explain concepts to each other.
+
+FOR AVERAGE SCORERS IN PHYSICS (50-74%):
+- Stop skipping derivations in exam — they carry guaranteed marks.
+- Solve at least 1 numerical from each chapter daily.
+- Attempt past 5-year question papers chapter by chapter.
+
+FOR EXCELLENT SCORERS IN PHYSICS (75%+):
+- Prepare for JEE-level numericals to build speed for standard exams.
+- Focus on integrated problems that combine 2 or more chapters.
+- Review all HOTS (Higher Order Thinking Skills) questions.

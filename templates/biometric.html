@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}Biometric Authorization{% endblock %}
+
+{% block nav_links %}
+    <a href="{% url 'home_page' %}" class="nav-link">Home</a>
+    <a href="{% url 'biometric_scan' %}" class="nav-link active">Scan</a>
+    <a href="{% url 'about_page' %}" class="nav-link">About</a>
+{% endblock %}
+
+{% block content %}
+
+<!--
+    MODULE 1: Biometric Authorization Module
+    ─────────────────────────────────────────
+    This page simulates a fingerprint/biometric scan.
+    The animation runs via CSS + JS (biometric.js).
+    On "Authorize", the form POSTs to /authorize/.
+-->
+
+<div class="bio-container">
+
+    <!-- Left Panel: Branding -->
+    <div class="bio-left">
+        <div class="bio-logo-wrap">
+            <span class="bio-logo-icon">⬡</span>
+            <h1 class="bio-logo-text">MentoraX <span>AI</span></h1>
+        </div>
+        <p class="bio-tagline">Neural Academic Engine</p>
+        <p class="bio-desc">
+            An intelligent diagnostic system that interprets academic data,
+            identifies performance gaps, and guides students toward optimal outcomes.
+        </p>
+
+        <ul class="bio-features">
+            <li><span class="feat-icon">🧠</span> Heuristic Diagnostic Engine</li>
+            <li><span class="feat-icon">📊</span> Neural HUD Visualization</li>
+            <li><span class="feat-icon">🔍</span> Correlation Mapping</li>
+            <li><span class="feat-icon">🤖</span> AI-Driven Recommendations</li>
+        </ul>
+    </div>
+
+    <!-- Right Panel: Biometric Scan UI -->
+    <div class="bio-right">
+        <div class="bio-card">
+
+            <p class="bio-status-label">SYSTEM STATUS</p>
+            <div class="bio-status-row">
+                <span class="status-dot active"></span>
+                <span class="status-text">Neural Engine Online</span>
+            </div>
+
+            <h2 class="bio-card-title">Biometric Authorization</h2>
+            <p class="bio-card-sub">Place finger on scanner to verify identity</p>
+
+            <!-- ─── Fingerprint Scanner Animation ─── -->
+            <div class="fingerprint-wrap" id="scannerWrap">
+                <div class="fp-scanner" id="fpScanner">
+                    <!-- SVG fingerprint lines (simplified, decorative) -->
+                    <svg class="fp-svg" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="50" cy="60" rx="45" ry="55" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3"/>
+                        <ellipse cx="50" cy="60" rx="38" ry="47" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+                        <ellipse cx="50" cy="60" rx="31" ry="39" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
+                        <ellipse cx="50" cy="60" rx="24" ry="31" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
+                        <ellipse cx="50" cy="60" rx="17" ry="23" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.7"/>
+                        <ellipse cx="50" cy="60" rx="10" ry="15" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.8"/>
+                        <ellipse cx="50" cy="60" rx="4"  ry="7"  fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.9"/>
+                    </svg>
+                    <!-- Scan line sweeps across the fingerprint -->
+                    <div class="fp-scan-line" id="scanLine"></div>
+                    <!-- Glow ring -->
+                    <div class="fp-glow-ring" id="glowRing"></div>
+                </div>
+
+                <!-- Status text below scanner -->
+                <p class="fp-status" id="fpStatus">Awaiting Authorization...</p>
+            </div>
+
+            <!-- ─── Name Entry Form ─── -->
+            <form method="POST" action="{% url 'authorize' %}" id="bioForm">
+                {% csrf_token %}
+
+                <div class="form-group-bio">
+                    {{ form.student_name }}
+                    {% if form.student_name.errors %}
+                        <p class="field-error">{{ form.student_name.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                {% if form.non_field_errors %}
+                    <p class="field-error">{{ form.non_field_errors.0 }}</p>
+                {% endif %}
+
+                <button type="button" class="btn-scan" id="startScanBtn" onclick="startScan()">
+                    <span class="btn-icon">⬡</span> Start Scan
+                </button>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+<script src="{% static 'js/biometric.js' %}"></script>
+{% endblock %}
